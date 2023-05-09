@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class MainMrBet {
 	public static void main(String[] args) {
 		MrBet mrBet = new MrBet();
-		
+
 		Scanner scanner = new Scanner(System.in);
 		String escolha = "";
 		while (true) {
@@ -37,11 +37,83 @@ public class MainMrBet {
 	 * @param scanner Objeto scanner para o caso do comando precisar de mais input.
 	 */
 	private static void comando(String opcao, MrBet mrBet, Scanner scanner) {
-		if (opcao.isBlank() || opcao == null) throw new IllegalArgumentException("Comando inválido, insira uma das opções anteriores");
-		if (opcao.equals("!")) sai();
+		if (opcao.isBlank() || opcao == null) {
+			throw new IllegalArgumentException("Comando inválido, insira uma das opções anteriores");
+		}
+		if (opcao.equals("M")) {
+			System.out.print("Código: ");
+			String codigo = scanner.nextLine().toUpperCase();
+			System.out.print("Nome: ");
+			String nome = scanner.nextLine();
+			System.out.print("Mascote: ");
+			String mascote = scanner.nextLine();
+			System.out.println("Código: " + codigo + "\nNome: " + nome + "\nMascote: " + mascote);
+			System.out.println(mrBet.incluirTime(codigo, nome, mascote));
+		}
+		if (opcao.equals("R")) {
+			System.out.print("Código: ");
+			String codigo = scanner.nextLine().toUpperCase();
+			System.out.println(mrBet.resgatarTime(codigo));
+		}
+		if (opcao.equals(".")) {
+			System.out.print("Campeonato: ");
+			String nomeCampeonato = scanner.nextLine().toUpperCase();
+			System.out.print("Participantes: ");
+			int numeroParticipantes = scanner.nextInt();
+			scanner.nextLine();
+			System.out.println(mrBet.adicionarCampeonato(nomeCampeonato, numeroParticipantes));
+		}
+		if (opcao.equals("B")) {
+			System.out.print("(I) Incluir time em campeonato ou (V) Verificar se time está em campeonato?");
+			String escolha = scanner.nextLine().toUpperCase();
+			if (escolha.equals("I")) {
+				System.out.print("Código: ");
+				String codigo = scanner.nextLine().toUpperCase();
+				System.out.print("Campeonato: ");
+				String nomeCampeonato = scanner.nextLine().toUpperCase();
+				System.out.println("Código: " + codigo);
+				System.out.println("Campeonato: " + nomeCampeonato);
+				System.out.println(mrBet.incluirTimeEmCampeonato(nomeCampeonato, codigo));
+			}
+			if (escolha.equals("V")) {
+				System.out.print("Código: ");
+				String codigo = scanner.nextLine().toUpperCase();
+				System.out.print("Campeonato: ");
+				String nomeCampeonato = scanner.nextLine().toUpperCase();
+				System.out.println("Código: " + codigo);
+				System.out.println("Campeonato: " + nomeCampeonato);
+				System.out.println(mrBet.verificarTimeCampeonato(nomeCampeonato, codigo));
+			}
+		}
+		if (opcao.equals("E")) {
+			System.out.print("Time: ");
+			String time = scanner.nextLine().toUpperCase();
+			System.out.println(mrBet.exibirCampeonatos(time));
+		}
+		if (opcao.equals("T")) {
+			System.out.print("(A)Apostar ou (S)Status das Apostas?");
+			String escolha = scanner.nextLine().toUpperCase();
+			if (escolha.equals("A")) {
+				System.out.print("Código: ");
+				String codigo = scanner.nextLine().toUpperCase();
+				System.out.print("Campeonato: ");
+				String nomeCampeonato = scanner.nextLine().toUpperCase();
+				System.out.print("Colocação: ");
+				int colocacao = scanner.nextInt();
+				System.out.print("Valor da Aposta: ");
+				double valorAposta = scanner.nextDouble();
+				System.out.println(mrBet.apostar(codigo, nomeCampeonato, colocacao, valorAposta));
+			}
+//			if (escolha.equals("S")) {
+//				
+//			}
+		}
+		if (opcao.equals("!"))
+			sai();
 	}
+
 	private static void sai() {
-		System.out.println("\nObrigado por usar o Mr.Bet!");
+		System.out.println("\nPor hoje é só pessoal!");
 		System.exit(0);
 	}
 }
