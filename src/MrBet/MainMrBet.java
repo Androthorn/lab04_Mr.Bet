@@ -73,7 +73,7 @@ public class MainMrBet {
 				String nomeCampeonato = scanner.nextLine().toUpperCase();
 				System.out.println("Código: " + codigo);
 				System.out.println("Campeonato: " + nomeCampeonato);
-				System.out.println(mrBet.incluirTimeEmCampeonato(nomeCampeonato, codigo));
+				System.out.println(mrBet.incluirTimeCampeonato(nomeCampeonato, codigo));
 			}
 			if (escolha.equals("V")) {
 				System.out.print("Código: ");

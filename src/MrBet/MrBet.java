@@ -42,7 +42,7 @@ public class MrBet {
 		return campeonatos;
 	}
 
-	public String incluirTimeEmCampeonato(String nomeCampeonato, String codigo) {
+	public String incluirTimeCampeonato(String nomeCampeonato, String codigo) {
 		Campeonato campeonato = campeonatos.get(nomeCampeonato);
 		if (campeonato == null)
 			return "CAMPEONATO NÃO EXISTE!";
@@ -99,18 +99,17 @@ public class MrBet {
 	}
 
 	public String exibeApostas() {
-		String exibir = "Apostas:\n";
+		String exibir = "Apostas:";
 		int i = 1;
 		for (Aposta aposta : apostas) {
 			Time time = times.get(aposta.getCodigo());
 			Campeonato campeonato = campeonatos.get(aposta.getNomeCampeonato());
-			
-			exibir += i + ". " + "[" + aposta.getCodigo() + "]" + " " + time.toString() + "\n" + aposta.getNomeCampeonato() + "\n" + aposta.getColocacao()
-					+ "/" + campeonato.getNumeroParticipantes() + "\nR$ " + aposta.getValorAposta() + "\n\n";
+			exibir += "\n" + i + ". " + aposta.exibirApostaCompleta(time, campeonato);
 			i += 1;
 		}
 		return exibir;
 	}
+
 
 	public HashMap<String, Time> getTimes() {
 		return times;

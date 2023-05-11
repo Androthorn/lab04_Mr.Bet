@@ -35,4 +35,10 @@ public class Aposta {
 		return valorAposta;
 	}
 	
+	public String exibirApostaCompleta(Time time, Campeonato campeonato) {
+		return "[" + getCodigo() + "]" + " " + time.toString() + "\n" + getNomeCampeonato() + "\n" + getColocacao()
+		+ "/" + campeonato.getNumeroParticipantes() + "\nR$ " + getValorAposta() + "\n";
+	}
+
+	
 }

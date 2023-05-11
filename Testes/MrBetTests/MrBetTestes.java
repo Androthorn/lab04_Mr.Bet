@@ -10,10 +10,11 @@ import MrBet.MrBet;
 class MrBetTestes {
 	MrBet mrBet = new MrBet();
 
-	public MrBetTestes() {
+	@BeforeEach
+	void mrBetTestes() {
 		this.mrBet.adicionarCampeonato("Campeonato Brasileiro", 20);
 		this.mrBet.incluirTime("122-b", "Palmeiras", "Porco");
-		this.mrBet.incluirTimeEmCampeonato("Campeonato Brasileiro", "122-b");
+		this.mrBet.incluirTimeCampeonato("Campeonato Brasileiro", "122-b");
 	}
 
 	@Test
@@ -63,35 +64,41 @@ class MrBetTestes {
 
 	@Test
 	void testIncluirTimeEmCampeonato() {
-		assertEquals("TIME INCLUÍDO NO CAMPEONATO!", mrBet.incluirTimeEmCampeonato("Campeonato Brasileiro", "122-b"));
+		assertEquals("TIME INCLUÍDO NO CAMPEONATO!", mrBet.incluirTimeCampeonato("Campeonato Brasileiro", "122-b"));
 	}
 
 	@Test
 	void testIncluirTimeEmCampeonatoInexistente() {
-		assertEquals("CAMPEONATO NÃO EXISTE!", mrBet.incluirTimeEmCampeonato("Campeonato Xexelento", "122-b"));
+		assertEquals("CAMPEONATO NÃO EXISTE!", mrBet.incluirTimeCampeonato("Campeonato Xexelento", "122-b"));
 	}
 
 	@Test
 	void testIncluirTimeEmCampeonatoTimeInexistente() {
-		assertEquals("TIME NÃO EXISTE!", mrBet.incluirTimeEmCampeonato("Campeonato Brasileiro", "000-A"));
+		assertEquals("TIME NÃO EXISTE!", mrBet.incluirTimeCampeonato("Campeonato Brasileiro", "000-A"));
 	}
 
 	@Test
 	void testIncluirTimeEmCampeonatoUltimaVaga() {
 		this.mrBet.adicionarCampeonato("Campeonato Paraibano", 1);
-		assertEquals("TIME INCLUÍDO NO CAMPEONATO!", mrBet.incluirTimeEmCampeonato("Campeonato Paraibano", "122-b"));
+		assertEquals("TIME INCLUÍDO NO CAMPEONATO!", mrBet.incluirTimeCampeonato("Campeonato Paraibano", "122-b"));
 	}
 
 	@Test
 	void testIncluirTimeEmCampeonatoSemVagas() {
 		this.mrBet.adicionarCampeonato("Campeonato Paraibano", 0);
 		assertEquals("TODOS OS TIMES DESSE CAMPEONATO JÁ FORAM INCLUÍDOS!",
-				mrBet.incluirTimeEmCampeonato("Campeonato Paraibano", "122-b"));
+				mrBet.incluirTimeCampeonato("Campeonato Paraibano", "122-b"));
 	}
 
 	@Test
 	void testVerificarTimeCampeonato() {
 		assertEquals("O TIME ESTÁ NO CAMPEONATO!", mrBet.verificarTimeCampeonato("Campeonato Brasileiro", "122-b"));
+	}
+
+	@Test
+	void testVerificarTimeCampeonatoTimeNaoEstaEmCampeonato() {
+		mrBet.adicionarCampeonato("Campeonato da UFCG", 30);
+		assertEquals("O TIME NÃO ESTÁ NO CAMPEONATO!", mrBet.verificarTimeCampeonato("Campeonato da UFCG", "122-b"));
 	}
 
 	@Test
@@ -107,10 +114,15 @@ class MrBetTestes {
 	@Test
 	void testExibirCampeonatos() {
 		this.mrBet.adicionarCampeonato("Campeonato dos melhores do mundo", 30);
-		this.mrBet.incluirTimeEmCampeonato("Campeonato dos melhores do mundo", "122-b");
+		this.mrBet.incluirTimeCampeonato("Campeonato dos melhores do mundo", "122-b");
 		assertEquals(
 				"Campeonatos do Palmeiras:\n* Campeonato Brasileiro - 1/20\n* Campeonato dos melhores do mundo - 1/30",
 				mrBet.exibirCampeonatos("122-b"));
+	}
+
+	@Test
+	void testExibirCampeonatosTimeInexistente() {
+		assertEquals("O TIME NÃO EXISTE!", mrBet.exibirCampeonatos("1232918-c"));
 	}
 
 	@Test
@@ -128,11 +140,21 @@ class MrBetTestes {
 	}
 
 	@Test
+	void testApostaTimeNaoExiste() {
+		assertEquals("O TIME NÃO EXISTE!", mrBet.apostar("312893-b", "Campeonato Brasileiro", 4, 55));
+	}
+
+	@Test
+	void testApostaCampeonatoNaoExiste() {
+		assertEquals("CAMPEONATO NÃO EXISTE!", mrBet.apostar("122-b", "Campeonato Louco", 3, 1000.00));
+	}
+
+	@Test
 	void testExibirApostas() {
 		mrBet.apostar("122-b", "Campeonato Brasileiro", 1, 30);
 		mrBet.apostar("122-b", "Campeonato Brasileiro", 20, 100);
 		assertEquals(
-				"Apostas:\n1. [122-b] Palmeiras / Porco\nCampeonato Brasileiro\n1/20\nR$ 30.0\n\n2. [122-b] Palmeiras / Porco\nCampeonato Brasileiro\n20/20\nR$ 100.0\n\n",
+				"Apostas:\n1. [122-b] Palmeiras / Porco\nCampeonato Brasileiro\n1/20\nR$ 30.0\n\n2. [122-b] Palmeiras / Porco\nCampeonato Brasileiro\n20/20\nR$ 100.0\n",
 				mrBet.exibeApostas());
 	}
 }
