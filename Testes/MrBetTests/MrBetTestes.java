@@ -28,9 +28,14 @@ class MrBetTestes {
 	}
 
 	@Test
+	void IncluirTimeCodigoEmBranco() {
+		assertThrows(IllegalArgumentException.class, () -> mrBet.incluirTime("", "Flamengo", "Urubu"));
+	}
+
+	@Test
 	void testResgatarTimeExistente() {
 		assertEquals("Palmeiras / Porco", mrBet.resgatarTime("122-b"));
-	}
+	} 
 
 	@Test
 	void testResgatarTimeNaoExistente() {
@@ -48,13 +53,18 @@ class MrBetTestes {
 	}
 
 	@Test
+	void IncluirCampeonatoNomeEmBranco() {
+		assertThrows(IllegalArgumentException.class, () -> mrBet.adicionarCampeonato("", 33));
+	}
+	
+	@Test
 	void testQuantidadeCampeonatos() {
 		assertEquals(1, mrBet.getCampeonatos().size());
 	}
 
 	@Test
 	void testCampeonatoExiste() {
-		assertTrue(mrBet.getCampeonatos().containsKey("Campeonato Brasileiro"));
+		assertTrue(mrBet.getCampeonatos().containsKey("CAMPEONATO BRASILEIRO"));
 	}
 
 	@Test
@@ -116,7 +126,7 @@ class MrBetTestes {
 		this.mrBet.adicionarCampeonato("Campeonato dos melhores do mundo", 30);
 		this.mrBet.incluirTimeCampeonato("Campeonato dos melhores do mundo", "122-b");
 		assertEquals(
-				"Campeonatos do Palmeiras:\n* Campeonato Brasileiro - 1/20\n* Campeonato dos melhores do mundo - 1/30",
+				"Campeonatos do Palmeiras:\n* CAMPEONATO BRASILEIRO - 1/20\n* CAMPEONATO DOS MELHORES DO MUNDO - 1/30",
 				mrBet.exibirCampeonatos("122-b"));
 	}
 
@@ -128,14 +138,14 @@ class MrBetTestes {
 	@Test
 	void testApostaValida() {
 		assertEquals(
-				"Código: 122-b\nCampeonato: Campeonato Brasileiro\nColocação: 1\nValor da Aposta: R$30.0\nAPOSTA REGISTRADA!",
-				mrBet.apostar("122-b", "Campeonato Brasileiro", 1, 30));
+				"Código: 122-B\nCampeonato: CAMPEONATO BRASILEIRO\nColocação: 1\nValor da Aposta: R$30.0\nAPOSTA REGISTRADA!",
+				mrBet.apostar("122-B", "Campeonato Brasileiro", 1, 30));
 	}
 
 	@Test
 	void testApostaInvalida() {
 		assertEquals(
-				"Código: 122-b\nCampeonato: Campeonato Brasileiro\nColocação: 2929\nValor da Aposta: R$30.0\nAPOSTA NÃO REGISTRADA!",
+				"Código: 122-B\nCampeonato: CAMPEONATO BRASILEIRO\nColocação: 2929\nValor da Aposta: R$30.0\nAPOSTA NÃO REGISTRADA!",
 				mrBet.apostar("122-b", "Campeonato Brasileiro", 2929, 30));
 	}
 
@@ -154,7 +164,7 @@ class MrBetTestes {
 		mrBet.apostar("122-b", "Campeonato Brasileiro", 1, 30);
 		mrBet.apostar("122-b", "Campeonato Brasileiro", 20, 100);
 		assertEquals(
-				"Apostas:\n1. [122-b] Palmeiras / Porco\nCampeonato Brasileiro\n1/20\nR$ 30.0\n\n2. [122-b] Palmeiras / Porco\nCampeonato Brasileiro\n20/20\nR$ 100.0\n",
+				"Apostas:\n1. [122-B] Palmeiras / Porco\nCAMPEONATO BRASILEIRO\n1/20\nR$ 30.0\n\n2. [122-B] Palmeiras / Porco\nCAMPEONATO BRASILEIRO\n20/20\nR$ 100.0\n",
 				mrBet.exibeApostas());
 	}
 }

@@ -66,6 +66,9 @@ public class MainMrBet {
 		if (opcao.equals("B")) {
 			System.out.print("(I) Incluir time em campeonato ou (V) Verificar se time está em campeonato?");
 			String escolha = scanner.nextLine().toUpperCase();
+			if (escolha.isBlank() || escolha == null) {
+				throw new IllegalArgumentException("Comando inválido, insira uma das opções anteriores");
+			}
 			if (escolha.equals("I")) {
 				System.out.print("Código: ");
 				String codigo = scanner.nextLine().toUpperCase();
@@ -93,6 +96,9 @@ public class MainMrBet {
 		if (opcao.equals("T")) {
 			System.out.print("(A)Apostar ou (S)Status das Apostas?");
 			String escolha = scanner.nextLine().toUpperCase();
+			if (escolha.isBlank() || escolha == null) {
+				throw new IllegalArgumentException("Comando inválido, insira uma das opções anteriores");
+			}
 			if (escolha.equals("A")) {
 				System.out.print("Código: ");
 				String codigo = scanner.nextLine().toUpperCase();
@@ -102,11 +108,12 @@ public class MainMrBet {
 				int colocacao = scanner.nextInt();
 				System.out.print("Valor da Aposta: ");
 				double valorAposta = scanner.nextDouble();
+				scanner.nextLine();
 				System.out.println(mrBet.apostar(codigo, nomeCampeonato, colocacao, valorAposta));
 			}
-//			if (escolha.equals("S")) {
-//				
-//			}
+			if (escolha.equals("S")) {
+				System.out.println(mrBet.exibeApostas());
+			}
 		}
 		if (opcao.equals("!"))
 			sai();

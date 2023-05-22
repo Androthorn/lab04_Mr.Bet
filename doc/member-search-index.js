@@ -1,0 +1,1 @@
+memberSearchIndex = [{"p":"MrBetTests","c":"ApostaTestes","l":"aposta"},{"p":"MrBetTests","c":"ApostaTestes","l":"ApostaTestes()","u":"%3Cinit%3E()"},{"p":"MrBetTests","c":"ApostaTestes","l":"testApostaString()"}];updateSearchResults();
